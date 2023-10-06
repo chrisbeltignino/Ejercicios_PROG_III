@@ -1,130 +1,5 @@
 <?php
 
-/**
-    PARTE 1
-    Enviar (por POST) a la página ./nexo.php:
-    *-accion => 'agregar'
-    *-nombre => 'su nombre'
-    *-apellido => 'su apellido'
-    *-legajo => 'su legajo'
-    Recuperar los valores enviados y agregarlos al archivo ./archivos/alumnos.txt.
-    El formato que deberá tener cada registro será el siguiente:
-    legajo - apellido - nombre
-    Indicar, a partir de un mensaje, si se pudo o no guardar al alumno.
-
-    PARTE 2
-    Enviar (por GET) a la página ./nexo.php:
-    *-accion => 'listar'
-    Recuperar el valor enviado y mostrar el contenido completo del archivo
-    ./archivos/alumnos.txt.
-    Cada registro se mostrará con el siguiente formato (un registro por fila):
-    legajo - apellido - nombre
-
-    PARTE 3
-    Enviar (por POST) a la página ./nexo.php:
-    *-accion => 'verificar'
-    *-legajo => 'su legajo'
-    Recuperar los valores enviados y buscar en el archivo ./archivos/alumnos.txt la
-    existencia de un registro que coincida con el legajo recuperado.
-    ● Si se encuentra, mostrar:
-    'El alumno con legajo 'xxx' se encuentra en el listado'
-    ● Si no se encuentra, mostrar el siguiente mensaje:
-    'El alumno con legajo 'xxx' no se encuentra en el listado'
-    Siendo 'xxx' el valor del legajo enviado por POST.
-
-    PARTE 4
-    Enviar (por POST) a la página ./nexo.php:
-    *-accion => 'modificar'
-    *-nombre => 'un nombre'
-    *-apellido => 'un apellido'
-    *-legajo => 'un legajo'
-    Recuperar los valores enviados y buscar en el archivo ./archivos/alumnos.txt la
-    existencia de un registro que coincida con el legajo recuperado.
-    ● Si se encuentra, reemplazar el apellido y el nombre del archivo, por los
-    valores recuperados por POST.
-    Mostrar un mensaje que diga: 'El alumno con legajo 'xxx' se ha modificado'
-    ● Si no se encuentra, mostrar el siguiente mensaje:
-    'El alumno con legajo 'xxx' no se encuentra en el listado'
-    Siendo 'xxx' el valor del legajo enviado por POST.
-
-    PARTE 5
-    Enviar (por POST) a la página ./nexo.php:
-    *-accion => 'borrar'
-    *-legajo => 'un legajo'
-    Recuperar los valores enviados y buscar en el archivo ./archivos/alumnos.txt la
-    existencia de un registro que coincida con el legajo recuperado.
-    ● Si se encuentra, borrar el archivo.
-    Mostrar un mensaje que diga: 'El alumno con legajo 'xxx' se ha borrado'
-    ● Si no se encuentra, mostrar el siguiente mensaje:
-    'El alumno con legajo 'xxx' no se encuentra en el listado'
-    Siendo 'xxx' el valor del legajo enviado por POST.
-
-    PARTE 6
-    Tomando como punto de partida las funcionalidades anteriores, se pide:
-    Crear la clase Alumno (en un namespace nombrado con su apellido) con los
-    atributos y métodos necesarios para realizar el CRUD sobre el archivo
-    ./archivos/alumnos.txt.
-    Las peticiones realizarlas sobre la página ./nexo_poo.php.
-
-    PARTE 7
-    Agregar a la clase Alumno el atributo 'foto' (string) y modificar los métodos
-    necesarios para realizar el CRUD sobre el archivo ./archivos/alumnos_foto.txt,
-    que ahora tendrá el siguiente formato:
-    legajo - apellido - nombre - foto (el path)
-    La foto guardarla en ./fotos y su nombre será:
-    ● legajo.extension
-
-    Probar que el CRUD funcione correctamente en ./nexo_poo_foto.php.
-
-    PARTE 8
-    Agregar, en ./nexo_poo_foto.php:
-    1.- el caso "obtener":
-    retorna un var_dump() del objeto de tipo alumno que coincida con el legajo
-    recibido como parámetro.
-    NOTA: agregar un método en alumno que reciba como parámetro un legajo y retorne
-    un objeto de tipo Alumno.
-    2.- el caso "redirigir":
-    Se invoca al método que verifica la existencia de un alumno por su legajo.
-    Si se encuentra:
-    redirigir hacia la página 'principal.php' (crearla en el raíz).
-    Si no se encuentra, mostrar el siguiente mensaje:
-    'El alumno con legajo 'xxx' no se encuentra en el listado'
-    Siendo 'xxx' el valor del legajo enviado por POST.
-    */
-//$archivo = isset($_POST["archivo"]) ? $_POST["archivo"] : NULL;
-
-//PATHINFO RETORNA UN ARRAY CON INFORMACION DEL PATH
-//RETORNA : NOMBRE DEL DIRECTORIO; NOMBRE DEL ARCHIVO; EXTENSION DEL ARCHIVO
-
-//PATHINFO_DIRNAME - retorna solo nombre del directorio
-//PATHINFO_BASENAME - retorna solo el nombre del archivo (con la extension)
-//PATHINFO_EXTENSION - retorna solo extension
-//PATHINFO_FILENAME - retorna solo el nombre del archivo (sin la extension)
-
-/**
-1)Se importa la clase Alumno del namespace Tignino utilizando use.
-
-2)La función AgregarImagen se encarga de subir una imagen al directorio de fotos (./archivos/fotos/) y devuelve la ruta de la imagen. 
-Verifica el tipo de archivo, su tamaño y si ya existe un archivo con el mismo nombre.
-
-3)Se recuperan los valores POST para determinar el tipo de ejemplo a ejecutar, el legajo, el apellido y el nombre del alumno.
-
-4)El código utiliza un switch para realizar diferentes acciones según el tipo de ejemplo especificado en el formulario:
-    -En el caso "agregar," se agrega un alumno con una imagen al archivo alumnos_foto.txt y se llama a la función Alumno::agregar.
-    -En el caso "listar," se muestra el contenido del archivo alumnos_foto.txt llamando a Alumno::listar.
-    -En el caso "obtener," se verifica si un alumno con un legajo específico existe en el archivo y se muestra el resultado llamando a Alumno::verificar.
-    -En el caso "modificar," se modifica un alumno con una imagen en el archivo alumnos_foto.txt llamando a Alumno::modificar.
-    -En el caso "eliminar," se elimina un alumno del archivo alumnos_foto.txt llamando a Alumno::borrar.
-
-5)En el caso "redirigir," se verifica si un alumno con un legajo específico existe y, si es así, se redirige a una página de inicio 
-(principal.php) y se establece una cookie.
-
-6)El código incluye enlaces para volver a la página de inicio.
-
-Este código permite realizar operaciones básicas de creación, lectura, actualización y eliminación (CRUD) de registros de alumnos, 
-incluyendo el manejo de imágenes. Además, tiene una opción para redirigir a una página de inicio después de verificar la existencia de un alumno.
- */
-
 // Se requiere el archivo Tignino.php que contiene la definición de la clase Alumno en el namespace Tignino.
 require_once("Tignino.php");
 
@@ -241,7 +116,7 @@ switch ($tipoEjemplo) {
             $_SESSION["apellido"] = $alum->apellido;
             $_SESSION["nombre"] = $alum->nombre;
             $_SESSION["foto"] = $alum->foto;
-            header('Location: http://localhost/Programacion_3/Ejercicio_CRUD/principal.php');
+            header('Location: http://localhost/Programacion_3/Ejercicio_CRUD/BACKEND/principal.php');
             $hora = date("Y-m-d H:i:s");
             setcookie("Ingreso del alumno legajo $legajo, a las $hora)");
         } else {

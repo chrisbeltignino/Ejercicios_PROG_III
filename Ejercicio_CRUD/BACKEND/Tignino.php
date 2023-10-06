@@ -230,7 +230,7 @@ namespace Tignino {
             $ar = fopen("./archivos/alumnos_foto.txt", "r");           
             while (!feof($ar)) {
                 $linea = fgets($ar);
-                $array_linea = explode("-", $linea);
+                $array_linea = explode("-", $linea);             // Divide la línea en un array utilizando el guión como separador.
                 $array_linea[0] = trim($array_linea[0]);
                 if ($array_linea[0] != "") {
                     // RECUPERA LOS CAMPOS
